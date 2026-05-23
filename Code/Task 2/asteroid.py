@@ -11,7 +11,7 @@ class Asteroid:
         #asteroid directions ( aka angle)
 
         angle = np.random.uniform(0, 2 * math.pi)
-        speed = 1.0  #constant speed for all asteroids
+        speed = 8.0  #constant speed for all asteroids
 
         # velocity so makes sure that every single asteroid moves at the exact same speed, while still heading down its own unique/ random path
         self.velocity = np.array([math.cos(angle) * speed, math.sin(angle) * speed])

@@ -11,7 +11,6 @@ class Ship:
         self.angle = 0.0
         # Additional properties goes here:
 
-
         # Leave the rest of these properties
         self.surface = surface
         self.radius = 20
@@ -23,10 +22,17 @@ class Ship:
         # Action required!
 
         # Set position of ship based on given parameter
-        self.pos = self.pos
+        target = np.array([float(mouse_pos[0]), float(mouse_pos[1])])
+        direction = target - self.pos
+        distance = np.linalg.norm(direction)
+        if distance > 0.1:
+            self.pos = self.pos + (direction / distance) * min(10.0, distance)
 
         # Determine rotation angle of ship to point at cursor
-        self.angle = self.angle
+        self.angle = math.degrees(math.atan2(direction[1], direction[0]))
+        if distance > 2.0:
+            self.angle = math.atan2(direction[1], direction[0]) - (math.pi / 2)
+            
 
         # Leave the rest of the code
         # Check for collision
