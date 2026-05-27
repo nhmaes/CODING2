@@ -8,12 +8,13 @@ class Asteroid:
         self.pos = np.array([x, y])
         # Additional properties goes here:
 
-        #asteroid directions ( aka angle)
-
+        # i pick a random angle between 0 and a full circle so each asteroid heads in a different direction
         angle = np.random.uniform(0, 2 * math.pi)
-        speed = 8.0  #constant speed for all asteroids
 
-        # velocity so makes sure that every single asteroid moves at the exact same speed, while still heading down its own unique/ random path
+        # i make speed random so asteroids dont all move at the same pace
+        speed = np.random.uniform(2.0, 8.0)
+
+        # i use cos and sin to split the angle into left/right and up/down movement then multiply by speed to control how fast it goes
         self.velocity = np.array([math.cos(angle) * speed, math.sin(angle) * speed])
 
         # Leave the rest of these properties
@@ -22,9 +23,9 @@ class Asteroid:
 
     def update(self, asteroids):
         # Action required!
-        # Set position of asteroid based on given parameter
 
-        # i added + self.pos + self.velocity to make sure that the asteroid moves in the direction of its velocity, instead of just staying still at its initial position
+        # Set position of asteroid based on given parameter
+        # i add velocity to position every frame so the asteroid actually moves instead of staying still
         self.pos = self.pos + self.velocity
 
         # Leave the rest of the code

@@ -11,6 +11,9 @@ class Ship:
         self.angle = 0.0
         # Additional properties goes here:
 
+        # i store the velocity as a zero vector to start so the ship isnt moving when the game loads
+        self.velocity = np.array([0.0, 0.0])
+
         # Leave the rest of these properties
         self.surface = surface
         self.radius = 20
@@ -22,18 +25,13 @@ class Ship:
         # Action required!
 
         # Set position of ship based on given parameter
-        target = np.array([float(mouse_pos[0]), float(mouse_pos[1])])
-        direction = target - self.pos
-        distance = np.linalg.norm(direction)
-        if distance > 0.1:
-            self.pos = self.pos + (direction / distance) * min(10.0, distance)
+        # i set the ship position directly to wherever the mouse is so it follows the cursor
+       # i calculate the angle first while self.pos is still the old position so the subtraction actually gives a real gap
+        # i negate the y difference to correct for pygame flipping the y axis downward
+        self.angle = math.atan2(-(mouse_pos[1] - self.pos[1]), mouse_pos[0] - self.pos[0])
 
-        # Determine rotation angle of ship to point at cursor
-        self.angle = math.degrees(math.atan2(direction[1], direction[0]))
-        if distance > 2.0:
-            self.angle = math.atan2(direction[1], direction[0]) - (math.pi / 2)
-            
-
+# i blend the ship position towards the mouse instead of snapping to it so the movement feels smooth
+        self.pos = self.pos + (mouse_pos - self.pos) * 0.2
         # Leave the rest of the code
         # Check for collision
         if game_status == "started":
@@ -59,7 +57,3 @@ class Ship:
                 self.color = (255, 0, 0)
                 self.collided = True
                 break
-
-
-
-
